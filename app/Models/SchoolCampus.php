@@ -65,7 +65,7 @@ class SchoolCampus extends Model
     }
 
     public function getCampusAttribute($value){
-        return strtoupper($value);
+        return ucwords(strtolower($value));
     }
 
     public function setCampusAttribute($value){

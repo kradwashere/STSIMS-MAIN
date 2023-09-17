@@ -2,24 +2,21 @@
 
 namespace App\Http\Resources\School;
 
-use Hashids\Hashids;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CourseResource extends JsonResource
 {
     public function toArray($request)
     {
-        $hashids = new Hashids('krad',10);
-        $id = $hashids->encode($this->id);
-        
         return [
             'id' => $this->id,
-            'code' => $id,
-            'years' => $this->years,
-            'type' => $this->type,
             'course' => $this->course->name,
-            'course_id' => $this->course->id,
-            'prospectuses' => $this->prospectuses
+            'certification' => $this->certification,
+            'years' => $this->years,
+            'validity' => $this->validity,
+            'type' => $this->type,
+            'school_id' => $this->school_id,
+            'is_active' => $this->is_active,
         ];
     }
 }

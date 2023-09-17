@@ -10,7 +10,7 @@ class SchoolCourse extends Model
     use HasFactory;
 
     protected $fillable = [
-        'school_id', 'course_id', 'type' , 'years', 'validity', 'certification'
+        'school_id', 'course_id', 'years', 'validity', 'certification'
     ];
 
     public function getTypeAttribute($value)

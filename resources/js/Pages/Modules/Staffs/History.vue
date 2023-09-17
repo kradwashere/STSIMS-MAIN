@@ -34,9 +34,18 @@ export default {
         this.fetch();
     },
     methods: {
-        fetch(){
-            axios.get(this.currentUrl+'/staffs/logs')
-            .then(response => { this.lists = response.data.data; })
+        fetch(page_url){
+            page_url = page_url || '/staffs';
+            axios.get(page_url,{
+                params : {
+                    type: 'logs'
+                }
+            })
+            .then(response => {
+                if(response){
+                    this.lists = response.data.data;          
+                }
+            })
             .catch(err => console.log(err));
         },
     }

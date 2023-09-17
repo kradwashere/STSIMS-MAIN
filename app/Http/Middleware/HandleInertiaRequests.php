@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 // use App\Models\College;
-// use App\Models\Course;
+use App\Models\ListCourse;
 use App\Models\ListPrivilege;
 // use App\Models\ListExpense;
 use App\Models\ListProgram;
@@ -43,7 +43,7 @@ class HandleInertiaRequests extends Middleware
             'agency' => $agency,
             'flash' => [
                 'message' => session('message'),
-                'datares' => session('data'),
+                'data' => session('data'),
                 'type' => session('type')
             ],
             'regions' => LocationRegion::all(),
@@ -53,7 +53,7 @@ class HandleInertiaRequests extends Middleware
             // 'expenses' => ListExpense::all(),
             'privileges' => ListPrivilege::all(),
             // 'colleges' => College::all(),
-            // 'courses' => Course::all(),
+            'courses' => ListCourse::all(),
             // 'dropdowns' => Dropdown::all(),
             'agencies' => ListAgency::all()
         ]);

@@ -3,13 +3,12 @@
         <b-col lg>
             <div class="input-group mb-1">
                 <span class="input-group-text"> <i class="ri-search-line search-icon"></i></span>
-                <input type="text" v-model="keyword" placeholder="Search Staff" class="form-control" style="width: 30%;">
-                <!-- <select v-model="role" @change="fetch()" class="form-select" id="inputGroupSelect01" style="width: 120px;">
-                    <option :value="null" selected>Select Role</option>
-                    <option :value="list" v-for="(list,index) in roles" v-bind:key="index">{{list}}</option>
-                </select> -->
+                <input type="text" v-model="keyword" placeholder="Search School" class="form-control" style="width: 30%;">
                 <span @click="refresh" class="input-group-text" v-b-tooltip.hover title="Refresh" style="cursor: pointer;"> 
-                    <i class="bx bx-refresh search-icon"></i>
+                    <i class="ri-refresh-fill text-primary search-icon"></i>
+                </span>
+                <span @click="showImport" class="input-group-text" v-b-tooltip.hover title="Import" style="cursor: pointer;"> 
+                    <i class="ri-file-excel-2-fill text-primary search-icon"></i>
                 </span>
                 <b-button type="button" variant="primary" @click="create()">
                     <i class="ri-add-circle-fill align-bottom me-1"></i> Create
@@ -22,10 +21,9 @@
             <thead class="table-light">
                 <tr class="fs-11">
                     <th></th>
-                    <th style="width: 30%;">Name</th>
-                    <th style="width: 15%;" class="text-center">Assigned</th>
-                    <th style="width: 15%;" class="text-center">Email</th>
-                    <th style="width: 15%;" class="text-center">Mobile</th>
+                    <th style="width: 45%;">Name</th>
+                    <th style="width: 15%;" class="text-center">Campus</th>
+                    <th style="width: 15%;" class="text-center">Class</th>
                     <th style="width: 15%;" class="text-center">Status</th>
                     <th style="width: 10%;"></th>
                 </tr>
@@ -34,53 +32,42 @@
                 <tr v-for="(list,index) in lists" v-bind:key="index" :class="[(list.is_active == 0) ? 'table-warnings' : '']">
                     <td>
                         <div class="avatar-xs chat-user-img online">
-                            <span v-if="list.avatar == 'avatar.jpg'" :class="'avatar-title rounded-circle bg-primary text-white'">{{list.profile.lastname[0]}}</span>
+                            <span v-if="list.avatar == 'school.jpg'" :class="'avatar-title rounded-circle bg-primary text-white'">{{list.name[0]}}</span>
                             <img v-else :src="currentUrl+'/images/avatars/'+list.avatar" alt="" class="avatar-xs rounded-circle">
                             <span v-if="list.is_active" class="user-status text-success"></span>
                         </div>
                     </td>
                     <td>
-                        <h5 class="fs-13 mb-0 text-dark">{{list.profile.agency.region.name}}</h5>
-                        <p class="fs-12 text-muted mb-0">{{list.profile.agency.name}}</p>
+                        <h5 class="fs-13 mb-0 text-dark">{{list.name}}</h5>
+                        <p class="fs-12 text-muted mb-0">{{list.shortcut}}</p>
                     </td>
-                    <td class="text-center">{{list.role}}</td>
-                    <td class="text-center">{{list.email}}</td>
-                    <td class="text-center">{{list.profile.mobile}}</td>
+                    <td class="text-center">{{list.campuses.length}} {{(list.campuses.length > 1) ? 'campuses' : 'campus'}}</td>
+                    <td class="text-center">{{list.class.name}}</td>
                     <td class="text-center">
                         <span v-if="list.is_active" class="badge bg-success">Active</span>
                         <span v-else class="badge bg-danger">Inactive</span>
                     </td>
                     <td class="text-end">
-                        <b-button variant="soft-success" @click="update('status',list,index)" v-b-tooltip.hover title="Lock" size="sm" class="remove-list me-1">
-                            <i class="ri-lock-2-fill align-bottom"></i>
-                        </b-button>
-                        <b-button variant="soft-warning"  @click="update('verification',list,index)" v-b-tooltip.hover title="Verify" size="sm" class="remove-list me-1">
-                            <i class="ri-mail-send-fill align-bottom"></i>
-                        </b-button>
-                        <b-button variant="soft-danger" @click="view(list)" v-b-tooltip.hover title="View" size="sm" class="remove-list me-1">
-                            <i class="ri-eye-fill align-bottom"></i>
-                        </b-button>
                         <b-button @click="edit(list,index)" variant="soft-primary" v-b-tooltip.hover title="Edit" size="sm" class="edit-list me-1">
                             <i class="ri-pencil-fill align-bottom"></i>
                         </b-button>
+                        <Link :href="`/schools/${list.code}`"><b-button variant="soft-info" v-b-tooltip.hover title="View" size="sm" class="edit-list"><i class="ri-eye-fill align-bottom"></i> </b-button></Link>
                     </td>
                 </tr>
             </tbody>
         </table>
         <Pagination class="ms-2 me-2" v-if="meta" @fetch="fetch" :lists="lists.length" :links="links" :pagination="meta" />
     </div>
-    <Create :agencies="agencies" ref="create"/>
-    <Update ref="update"/>
-    <View ref="view"/>
+    <Create :classes="classes" ref="create"/>
+    <Import ref="import"/>
 </template>
 <script>
-import View from './Modals/View.vue';
-import Update from './Modals/Update.vue';
+import Import from './Modals/Import.vue';
 import Create from './Modals/Create.vue';
 import Pagination from "@/Shared/Components/Pagination.vue";
 export default {
-    components : { Pagination, Create, Update, View },
-     props: ['agencies'],
+    components : { Pagination, Create, Import },
+    props: ['dropdowns'],
     data(){
         return {
             currentUrl: window.location.origin,
@@ -88,22 +75,15 @@ export default {
             meta: {},
             links: {},
             index: '',
-            role: null,
             keyword: '',
-            roles: [
-                'Regional Director', 
-                'Accountant', 
-                'Scholarship Coordinator', 
-                'Scholarship Staff',
-                'University Coordinator',
-                'PSTO Staff'
-            ],
-            type: ''
         }
     },
     computed: {
         data() {
             return this.$page.props.flash.data;
+        },
+        classes : function() {
+            return this.dropdowns.filter(x => x.classification === "Class");
         },
     },
     watch: {
@@ -134,11 +114,10 @@ export default {
             this.fetch();
         }, 300),
         fetch(page_url){
-            page_url = page_url || '/staffs';
+            page_url = page_url || '/schools';
             axios.get(page_url,{
                 params : {
                     keyword : this.keyword,
-                    role: this.role,
                     counts: ((window.innerHeight-350)/56),
                     type: 'lists'
                 }
@@ -156,21 +135,15 @@ export default {
             this.type = 'create';
             this.$refs.create.show();
         },
+        showImport(){
+            this.$refs.import.show();
+        },
         edit(data,index){
             this.type = 'edit';
             this.index = index;
             this.$refs.create.edit(data);
         },
-        update(type,data,index){
-            this.type = 'edit';
-            this.index = index;
-            this.$refs.update.show(type,data);
-        },
-        view(data){
-            this.$refs.view.show(data);
-        },
         refresh(){
-            this.role = null;
             this.keyword = '';
             this.fetch();
         }
