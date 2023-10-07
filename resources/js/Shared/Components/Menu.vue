@@ -48,18 +48,18 @@
                         <span data-key="t-students">Schools</span>
                     </Link>
                 </li>   
-                <!-- <li class="nav-item" v-if="$page.props.auth.data.role == 'Administrator'">
+                <li class="nav-item" v-if="$page.props.auth.data.role == 'Administrator'">
                     <Link class="nav-link menu-link" :class="{'active': $page.component.startsWith('Modules/Scholar') }" href="/scholars">
                         <i class='ri-team-fill'></i>
                         <span data-key="t-students">Scholars</span>
                     </Link>
-                </li>   -->
-                <!-- <li class="nav-item" v-if="$page.props.auth.data.role == 'Administrator'">
+                </li>  
+                <li class="nav-item" v-if="$page.props.auth.data.role == 'Administrator'">
                     <Link class="nav-link menu-link" :class="{'active': $page.component.startsWith('Modules/Qualifier') }" href="/qualifiers">
                         <i class='ri-team-line'></i>
                         <span data-key="t-students">Qualifiers</span>
                     </Link>
-                </li>   -->
+                </li>  
                  <!-- <li class="nav-item" v-if="$page.props.auth.data.role == 'Staff'">
                     <Link class="nav-link menu-link" :class="{'active': $page.component.startsWith('Modules/School/Temp') }" href="/schools-temporary">
                         <i class='bx bxs-school'></i>

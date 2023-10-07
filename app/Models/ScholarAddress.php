@@ -17,8 +17,6 @@ class ScholarAddress extends Model
         'address', 
         'district', 
         'is_completed',
-        'is_permanent',
-        'is_within',
         'scholar_id',
         'information'
     ];

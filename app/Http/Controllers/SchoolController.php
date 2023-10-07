@@ -54,4 +54,9 @@ class SchoolController extends Controller
         ]);
     }
 
+    public function api(){
+        $data = School::with('campuses','campuses.courses')->get();
+        return $data;
+    }
+
 }

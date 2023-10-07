@@ -32,6 +32,12 @@ class StaffController extends Controller
             case 'verification':
                 return $this->verification($request);
             break;
+            case 'token':
+                return $this->token($request);
+            break;
+            case 'revoke':
+                return $this->token($request);
+            break;
             default: 
                 return $this->edit($request);
         }

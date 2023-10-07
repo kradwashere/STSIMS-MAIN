@@ -35,7 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::prefix('scholars')->group(function(){
             Route::get('/{code}', [App\Http\Controllers\ScholarController::class, 'api']);
-            Route::post('/', [App\Http\Controllers\ScholarController::class, 'sync']);
+            Route::post('/', [App\Http\Controllers\ScholarController::class, 'store']);
         });
 
     });

@@ -18,7 +18,8 @@ class QualifierAddress extends Model
         'hs_school',
         'zipcode',
         'qualifier_id',
-        'information'
+        'information',
+        'is_within'
     ];
 
     public function qualifier()

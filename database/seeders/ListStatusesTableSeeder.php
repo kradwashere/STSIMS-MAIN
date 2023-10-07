@@ -211,8 +211,8 @@ class ListStatusesTableSeeder extends Seeder
                 'id' => 18,
                 'name' => 'Completed',
                 'type' => 'Qualifier Status',
-                'color' => 'bg-success',
-                'others' => 'n/a',
+                'color' => 'bg-soft-success',
+                'others' => 'badge-soft-success',
                 'is_active' => 1,
                 'created_at' => '2023-05-23 18:54:44',
                 'updated_at' => '2023-05-23 18:54:47',
@@ -222,8 +222,8 @@ class ListStatusesTableSeeder extends Seeder
                 'id' => 19,
                 'name' => 'Lacking',
                 'type' => 'Qualifier Status',
-                'color' => 'bg-warning',
-                'others' => 'n/a',
+                'color' => 'bg-soft-warning',
+                'others' => 'badge-soft-warning',
                 'is_active' => 1,
                 'created_at' => '2023-05-23 18:54:44',
                 'updated_at' => '2023-05-23 18:54:47',
@@ -233,11 +233,69 @@ class ListStatusesTableSeeder extends Seeder
                 'id' => 20,
                 'name' => 'Potential',
                 'type' => 'Qualifier Status',
-                'color' => 'bg-danger',
-                'others' => 'n/a',
+                'color' => 'bg-soft-danger',
+                'others' => 'badge-soft-danger',
                 'is_active' => 1,
                 'created_at' => '2023-05-23 18:54:44',
                 'updated_at' => '2023-05-23 18:54:47',
+            ),
+            20 => 
+            array (
+                'id' => 21,
+                'name' => 'Continued',
+                'type' => 'Status',
+                'color' => 'success',
+                'others' => 'n/a',
+                'is_active' => 1,
+                'created_at' => '2023-10-03 09:51:05',
+                'updated_at' => '2023-10-03 09:51:05',
+            ),
+            21 => 
+            array (
+                'id' => 22,
+                'name' => 'Continued Under Probation',
+                'type' => 'Status',
+                'color' => 'warning',
+                'others' => 'n/a',
+                'is_active' => 1,
+                'created_at' => '2023-10-03 09:51:05',
+                'updated_at' => '2023-10-03 09:51:05',
+            ),
+            22 => 
+            array (
+                'id' => 23,
+                'name' => 'Continued with Partial Allowance
+',
+                'type' => 'Status',
+                'color' => 'danger',
+                'others' => 'n/a',
+                'is_active' => 1,
+                'created_at' => '2023-10-03 09:51:05',
+                'updated_at' => '2023-10-03 09:51:05',
+            ),
+            23 => 
+            array (
+                'id' => 24,
+                'name' => 'Terminated with Service Obligation
+',
+                'type' => 'Status',
+                'color' => 'dark',
+                'others' => 'n/a',
+                'is_active' => 1,
+                'created_at' => '2023-10-03 09:51:05',
+                'updated_at' => '2023-10-03 09:51:05',
+            ),
+            24 => 
+            array (
+                'id' => 25,
+                'name' => 'Not Available
+',
+                'type' => 'Status',
+                'color' => 'dark',
+                'others' => 'n/a',
+                'is_active' => 0,
+                'created_at' => '2023-10-03 09:51:05',
+                'updated_at' => '2023-10-03 09:51:05',
             ),
         ));
         

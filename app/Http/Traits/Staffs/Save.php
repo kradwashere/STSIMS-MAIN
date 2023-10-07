@@ -118,4 +118,21 @@ trait Save {
             'color' => 'success'
         ]); 
     }
+
+    public static function token($request){
+        $user = User::findOrFail($request->id);
+        $user->tokens()->delete();
+        $token = $user->createToken('kradworkz')->plainTextToken;
+        return $token;
+    }
+
+    public static function revoke($request){
+        $user = User::findOrFail($request->id);
+        $user->tokens()->delete();
+        return [
+            'data' => '',
+            'message' => 'User API Key revoked. Thanks',
+            'type' => 'bx-mail-send'
+        ];
+    }
 }
