@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Scholar;
 use Illuminate\Http\Request;
 use App\Http\Traits\Scholars\Save;
+use App\Http\Traits\Scholars\Bank;
 use App\Http\Traits\Scholars\Truncate;
 use App\Http\Traits\Scholars\Viewing;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class ScholarController extends Controller
 {
-    use Save, Truncate, Viewing; 
+    use Bank, Save, Truncate, Viewing; 
 
     public function index(Request $request){
         $type = $request->type;
@@ -40,6 +41,12 @@ class ScholarController extends Controller
             break;
             case 'sync':
                 return $this->sync($request);
+            break;
+            case 'bank':
+                return $this->bank($request);
+            break;
+            case 'bank-update':
+                return $this->bank_update($request);
             break;
         }
     }
