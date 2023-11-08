@@ -88,6 +88,7 @@ trait Save {
                             'scholar_id' => $scholar_info->id,
                             'school_id' => $this->school($list['school']),
                             'course_id' => $this->course($list['course']),
+                            'level_id' => $this->level($list['status'], $list['year_awarded'],$list['subprogram']),
                             'information' => json_encode(
                                 $information = [
                                     'school' => $list['school'],
@@ -202,6 +203,28 @@ trait Save {
         }else{
             $status = ListStatus::select('id')->where('name',$name)->first();
             return $status->id;
+        }
+    }
+
+    public function level($name,$year,$subprogram){
+        if($name == 'GRADUATED' || $name == 'TERMINATED' || $name == 'NON-COMPLIANCE' || $name == 'WITHDREW'){
+            return 27;
+        }else if($name == 'ONGOING' || $name == 'NEW'){
+            $y = date('Y') - $year;
+            if($subprogram == 'JLSS'){
+                if($y == 1){
+                    return 26;
+                }else{
+                    return 27;
+                }
+            }else{
+                switch($y){
+                    case 1: return 24; break;
+                    case 2: return 25; break;
+                    case 3: return 26; break;
+                    case 4: return 27; break;
+                }
+            }
         }
     }
 
